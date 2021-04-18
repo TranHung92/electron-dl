@@ -58,6 +58,7 @@ function registerListener(session, options, callback = () => {}) {
 
 	options = {
 		showBadge: true,
+		showErrorDialog: true,
 		...options
 	};
 
@@ -179,7 +180,7 @@ function registerListener(session, options, callback = () => {}) {
 module.exports = (options = {}) => {
 	app.on('session-created', session => {
 		registerListener(session, options, (error, _) => {
-			if (error) {
+			if (error && options.showErrorDialog) {
 				const errorTitle = options.errorTitle || 'Download Error';
 				dialog.showErrorBox(errorTitle, error.message);
 			}
